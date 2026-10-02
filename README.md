@@ -85,14 +85,14 @@ The attack is modeled after real APT tradecraft: a phishing email delivers a mac
 
 ```
 SOC-Lab-Full-Attack-Simulation-Incident-Response/
-├── 01-initial-access/
-├── 02-execution-persistence/
-├── 03-credential-access/
-├── 04-discovery-lateral-movement/
-├── 05-collection/
-├── 06-exfiltration/
-├── 07-sentinel-detections/
-└── 07-ir-response/
+├── Project-8/01-initial-access-phishing/
+├── Project-8/02-execution-persistence/
+├── Project-8/03-credential-access/
+├── Project-8/04-discovery-lateral-movement/
+├── Project-8/05-collection/
+├── Project-8/06-c2-exfiltration/
+├── Project-8/07-detection-response-nist/
+
 ```
 
 ---
@@ -114,7 +114,7 @@ A PowerShell script hosted via a local HTTP listener on port 8080. When retrieve
 **Security Gap Identified:**
 MDO Safe Attachments policy (`SOC-Lab8-Safe-Attachments`) was configured but did not sandbox-detonate the attachment because Safe Attachments does not scan intra-org email by default. The `.docm` was delivered to the inbox unscanned.
 
-> 📸 Screenshots: `01-initial-access/`
+> 📸 Screenshots: `Project-8/01-initial-access-phishing/`
 
 ---
 
@@ -156,7 +156,7 @@ DeviceRegistryEvents
 | order by TimeGenerated desc
 ```
 
-> 📸 Screenshots: `02-execution-persistence/`
+> 📸 Screenshots: `Project-8/02-execution-persistence/`
 
 ---
 
@@ -185,7 +185,7 @@ AlertInfo
 | order by TimeGenerated desc
 ```
 
-> 📸 Screenshots: `03-credential-access/`
+> 📸 Screenshots: `Project-8/03-credential-access/`
 
 ---
 
@@ -247,7 +247,7 @@ Z:\IT\Network_Credentials_Backup.txt
 **Security Gap Identified:**
 The `Shares` SMB share was configured with `FullAccess "Everyone"`, allowing any authenticated user to read and write without additional privilege escalation.
 
-> 📸 Screenshots: `04-discovery-lateral-movement/`
+> 📸 Screenshots: `Project-8/04-discovery-lateral-movement/`
 
 ---
 
@@ -266,7 +266,7 @@ Compress-Archive -Path C:\Windows\Temp\staging\* `
 
 **Result:** `collected_data.zip` confirmed at `1,059 bytes` in `C:\Windows\Temp`.
 
-> 📸 Screenshots: `05-collection/`
+> 📸 Screenshots: `Project-8/05-collection/`
 
 ---
 
@@ -287,7 +287,7 @@ Invoke-WebRequest `
 **Detection Gap:**
 `DeviceNetworkEvents` in Sentinel returned no results for `vm-soc-ws02` during this session. Root cause: the MDE agent (`Sense` service) on `vm-soc-ws02` lost backend connectivity after the NAT Gateway was recreated at the start of the session and had not fully resynchronized by the time exfiltration occurred. Tamper Protection prevented manual service restart. This represents a real-world blind spot: endpoint telemetry gaps during infrastructure changes leave exfiltration activity undetected in the SIEM.
 
-> 📸 Screenshots: `06-exfiltration/`
+> 📸 Screenshots: `Project-8/06-c2-exfiltration/`
 
 ---
 
@@ -301,7 +301,7 @@ Three custom Sentinel analytics rules were created and triggered during this sim
 | SOC-Lab - Suspicious Scheduled Task Creation | Persistence | T1053.005 | High |
 | SOC-Lab - LSASS Memory Access Attempt | Credential Access | T1003.001 | High |
 
-> 📸 Screenshots: `07-sentinel-detections/`
+> 📸 Screenshots: `Project-8/07-detection-response-nist/`
 
 ---
 
